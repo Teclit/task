@@ -20,9 +20,7 @@ public class Task {
         this.completed = completed;
     }
 
-    // Getters et setters
 
-    // Constructeurs, getters, setters, et autres méthodes
     @JsonProperty("id")
     public Long getId() {
         return id;

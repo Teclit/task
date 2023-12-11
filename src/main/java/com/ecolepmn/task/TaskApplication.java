@@ -1,6 +1,5 @@
 package com.ecolepmn.task;
 
-import com.ecolepmn.task.entity.Task;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
