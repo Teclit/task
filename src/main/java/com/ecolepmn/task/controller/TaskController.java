@@ -1,109 +1,45 @@
 package com.ecolepmn.task.controller;
 
-import com.ecolepmn.task.entity.Task;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.ecolepmn.task.entity.Tasks;
+import com.ecolepmn.task.service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
-    private final List<Task> tasks;
-    private final String tasksJsonFilePath = "src/main/resources/data/tasks.json";
-    private Long taskIdCounter;
+    private final TaskService taskService;
 
-    public TaskController() {
-        tasks = loadTasksFromJsonFile();
-        taskIdCounter = calculateTaskIdCounter();
-    }
-
-    private List<Task> loadTasksFromJsonFile() {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            File file = new File(tasksJsonFilePath);
-            return objectMapper.readValue(file, new TypeReference<List<Task>>() {});
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
-
-    private Long calculateTaskIdCounter() {
-        return tasks.stream().mapToLong(Task::getId).max().orElse(0L) + 1;
+    @Autowired
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @GetMapping
-    public List<Task> getAllTasks() {
-        return tasks;
+    public List<Tasks> getAllTasks() {
+        return taskService.getAllTasks();
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable Long id) {
-        Task task = tasks.stream().filter(t -> t.getId().equals(id)).findFirst().orElse(null);
-        if (task == null) {
-            throw new NotFoundException("Task with ID " + id + " not found");
-        }
-        return task;
+    public Optional<Tasks> getTaskById(@PathVariable Long id) {
+        return taskService.getTaskById(id);
     }
 
     @PostMapping("/create")
-    public Task createTask(@RequestBody Task newTask) {
-        newTask.setId(taskIdCounter++);
-        tasks.add(newTask);
-        saveTasksToJsonFile(); // Save tasks to the JSON file
-        return newTask;
+    public Tasks createTask(@RequestBody Tasks task) {
+        return taskService.createTask(task);
     }
 
     @PutMapping("/update/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-        Task existingTask = tasks.stream().filter(t -> t.getId().equals(id)).findFirst().orElse(null);
-        if (existingTask == null) {
-            throw new NotFoundException("Task with ID " + id + " not found");
-        }
-        existingTask.setTitle(updatedTask.getTitle());
-        existingTask.setDescription(updatedTask.getDescription());
-        existingTask.setCompleted(updatedTask.isCompleted());
-        saveTasksToJsonFile();
-        return existingTask;
+    public Tasks updateTask(@PathVariable Long id, @RequestBody Tasks updatedTask) {
+        return taskService.updateTask(id, updatedTask);
     }
 
     @DeleteMapping("/delete/{id}")
     public void deleteTask(@PathVariable Long id) {
-        Task taskToDelete = tasks.stream().filter(task -> task.getId().equals(id)).findFirst().orElse(null);
-        if (taskToDelete != null) {
-            tasks.remove(taskToDelete);
-            saveTasksToJsonFile();
-        } else {
-            throw new NotFoundException("Task with ID " + id + " not found");
-        }
-    }
-
-    private void saveTasksToJsonFile() {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(new File(tasksJsonFilePath), tasks);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Custom exception handlers
-    @ExceptionHandler(NotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-    }
-
-    public static class NotFoundException extends RuntimeException {
-        public NotFoundException(String message) {
-            super(message);
-        }
+        taskService.deleteTask(id);
     }
 }

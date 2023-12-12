@@ -1,1 +1,56 @@
-[{"id":1,"title":" la fonctionnalité de connexion","description":"Créer la  de connexion pour les utilisateurs.","completed":true},{"id":2,"title":"Concevoir l'interface utilisateur","description":"Créer des maquettes et des prototypes de conception pour l'interface utilisateur.","completed":true},{"id":3,"title":"Implémenter le schéma de base de données","description":"Définir et configurer le schéma de base de données pour l'application.","completed":false},{"id":4,"title":"Développer la fonctionnalité de connexion","description":"Créer la fonctionnalité de connexion pour les utilisateurs.","completed":true},{"id":6,"title":"Tester les fonctionnalités de l'application","description":"Effectuer des tests approfondis des fonctionnalités de l'application.","completed":false},{"id":7,"title":"Créer la documentation technique","description":"Élaborer la documentation technique complète de l'application.","completed":false},{"id":8,"title":"Préparer la démonstration du projet","description":"Préparer une démonstration du projet pour l'équipe et les parties prenantes.","completed":false},{"id":9,"title":"Lancer la version bêta de l'application","description":"Déployer la version bêta de l'application pour les tests initiaux.","completed":false},{"id":10,"title":"Finaliser la version finale de l'application","description":"Effectuer les dernières retouches et préparer la version finale de l'application.","completed":false}]
+[
+  {
+    "id": 1,
+    "title": " la fonctionnalité de connexion",
+    "description": "Créer la  de connexion pour les utilisateurs.",
+    "completed": true
+  },
+  {
+    "id": 2,
+    "title": "Concevoir l'interface utilisateur",
+    "description": "Créer des maquettes et des prototypes de conception pour l'interface utilisateur.",
+    "completed": true
+  },
+  {
+    "id": 3,
+    "title": "Implémenter le schéma de base de données",
+    "description": "Définir et configurer le schéma de base de données pour l'application.",
+    "completed": false
+  },
+  {
+    "id": 4,
+    "title": "Développer la fonctionnalité de connexion",
+    "description": "Créer la fonctionnalité de connexion pour les utilisateurs.",
+    "completed": true
+  },
+  {
+    "id": 6,
+    "title": "Tester les fonctionnalités de l'application",
+    "description": "Effectuer des tests approfondis des fonctionnalités de l'application.",
+    "completed": false
+  },
+  {
+    "id": 7,
+    "title": "Créer la documentation technique",
+    "description": "Élaborer la documentation technique complète de l'application.",
+    "completed": false
+  },
+  {
+    "id": 8,
+    "title": "Préparer la démonstration du projet",
+    "description": "Préparer une démonstration du projet pour l'équipe et les parties prenantes.",
+    "completed": false
+  },
+  {
+    "id": 9,
+    "title": "Lancer la version bêta de l'application",
+    "description": "Déployer la version bêta de l'application pour les tests initiaux.",
+    "completed": false
+  },
+  {
+    "id": 10,
+    "title": "Finaliser la version finale de l'application",
+    "description": "Effectuer les dernières retouches et préparer la version finale de l'application.",
+    "completed": false
+  }
+]
