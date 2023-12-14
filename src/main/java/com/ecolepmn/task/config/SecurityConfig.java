@@ -38,7 +38,7 @@ public class SecurityConfig {
                     config.setExposedHeaders(List.of("Authorization"));
                     config.setMaxAge(3600L);
                     return config;
-                })).csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/task", "/tasks",  "/user", "/register")
+                })).csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/task/create", "/tasks",  "/users", "/register")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
@@ -47,9 +47,11 @@ public class SecurityConfig {
                 .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/task/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/user").authenticated()
-                        .requestMatchers("/task", "/tasks", "/user", "/register").permitAll()
+                        .requestMatchers("/task/{id}").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/task/update/{id}").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/task/delete/{id}").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/user/**").authenticated()
+                        .requestMatchers("/task/create", "/tasks", "/users", "/register").permitAll()
                 )
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());

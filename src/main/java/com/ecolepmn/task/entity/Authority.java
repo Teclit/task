@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.hibernate.annotations.GenericGenerator;
 
 @Data
@@ -18,6 +19,7 @@ public class Authority {
     @GenericGenerator(name = "native",strategy = "native")
     private Long id;
 
+    @NonNull
     private String name;
 
     @ManyToOne
