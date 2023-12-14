@@ -1,34 +1,43 @@
 package com.ecolepmn.task.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
-@Entity
+import java.util.Set;
+
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "app_user")
+@NoArgsConstructor
+@Entity
+@Table(name = "app_users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
-    @NotBlank(message = "Name should not be empty")
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
+    @GenericGenerator(name = "native",strategy = "native")
+    @Column(name = "user_id")
+    private int id;
+
     private String name;
 
-    @NotNull(message = "L'Email ne doit pas être vide")
-    @Email(message = "Entrer un email valide")
     private String email;
 
-    @NotNull(message = "Password should not be empty")
-    @Size(min = 5, message = "Password should be atleast 5 characters")
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    private String role;
+
+    @Column(name = "create_dt")
+    private String createDt;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="user",fetch=FetchType.EAGER)
+    private Set<Authority> authorities;
 
 }
