@@ -48,10 +48,6 @@ public class AuthenticationController {
 
         log.info(passwordEncoder.encode("user"));
 
-
-        /*if (authenticate.isAuthenticated()){
-            return this.jwtTokenUtil.generate(authentifDTO.username());
-        }*/
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authentificationDTO.username());
 
@@ -59,29 +55,6 @@ public class AuthenticationController {
         final String jwt = jwtTokenUtil.generateToken(userDetails.getUsername());
         return Map.of("Token", jwt);
 
-
-
-/*
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
-        );
-        final Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authentificationDTO.username(), authentificationDTO.password())
-        );
-        log.info("Success");
-
-
-
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
-
-        log.info(userDetails.getUsername());
-        final String jwt = jwtTokenUtil.generateToken(userDetails.getUsername());
-
-        return new AuthenticationResponse(jwt);
-
- */
-        //return null;
     }
 
 }

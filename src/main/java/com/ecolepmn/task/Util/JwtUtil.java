@@ -7,14 +7,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 @Slf4j
@@ -24,10 +21,6 @@ public class JwtUtil {
     private MyUserDetailsService userDetailsService;
     private String secret = "totohqebnvqd5d15qdfvqdjfbvkqdf4qf51errv55q45dgdf515ffv51dfv18q1fvq"; // Utilisez une clé secrète plus robuste
 
-    /*public Map<String, String> generate(String username) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-        return this.generateToken(userDetails);
-    }*/
 
     public String extractUsername(String token) {
         log.info("Extract Username");
@@ -72,9 +65,6 @@ public class JwtUtil {
                 .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
-        /*return Jwts.builder().setSubject(username).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 heures de validité
-                .signWith(SignatureAlgorithm.HS256, secret).compact();*/
         log.info(token);
 
         return token;
